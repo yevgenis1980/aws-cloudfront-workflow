@@ -24,12 +24,3 @@ output "nat_gateway_id" {
   value       = aws_nat_gateway.nat.id
 }
 
-output "asg_name" {
-  description = "Auto Scaling Group name"
-  value       = aws_autoscaling_group.asg.name
-}
-
-output "alb_dns_name" {
-  description = "The DNS name of the Application Load Balancer"
-  value       = aws_lb.app_alb.dns_name
-}
