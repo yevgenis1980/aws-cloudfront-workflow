@@ -24,3 +24,10 @@ output "nat_gateway_id" {
   value       = aws_nat_gateway.nat.id
 }
 
+output "s3_bucket_name" {
+  value = aws_s3_bucket.static_site.bucket
+}
+
+output "cloudfront_url" {
+  value = aws_cloudfront_distribution.cdn.domain_name
+}
