@@ -1,4 +1,7 @@
 
+# -----------------------------
+#           S3_Bucket
+# -----------------------------
 resource "aws_s3_bucket" "static_site" {
   bucket = "my-static-site-${random_id.bucket_id.hex}"
 
@@ -32,9 +35,9 @@ resource "aws_s3_bucket_public_access_block" "block" {
   restrict_public_buckets = true
 }
 
-
-
-
+# -----------------------------
+#          CloudFront 
+# -----------------------------
 resource "aws_cloudfront_origin_access_control" "oac" {
   name                              = "static-site-oac"
   description                       = "OAC for static site"
@@ -107,5 +110,13 @@ resource "aws_s3_bucket_policy" "allow_cloudfront" {
   bucket = aws_s3_bucket.static_site.id
   policy = data.aws_iam_policy_document.s3_policy.json
 }
+
+resource "aws_s3_object" "index" {
+  bucket = aws_s3_bucket.static_site.id
+  key    = "index.html"
+  source = "site/index.html"
+  content_type = "text/html"
+}
+
 
 
