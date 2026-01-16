@@ -1,6 +1,8 @@
 
+variable "aws_region" {
+default = "us-west-2"
+}
 
-variable "domain_name" {
-  description = "Public domain name for WordPress (e.g., example.com)"
-  type        = string
+variable "project_name" {
+default = "static-site"
 }
