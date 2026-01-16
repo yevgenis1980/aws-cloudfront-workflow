@@ -1,8 +1,6 @@
 
-variable "aws_region" {
-default = "us-west-2"
+output "cloudfront_domain" {
+value = module.cloudfront.domain_name
 }
 
-variable "project_name" {
-default = "static-site"
-}
+
