@@ -7,6 +7,10 @@ resource "aws_cloudfront_origin_access_control" "this" {
   signing_protocol                  = "sigv4"
 }
 
+data "aws_cloudfront_cache_policy" "caching_optimized" {
+  name = "Managed-CachingOptimized"
+}
+
 resource "aws_cloudfront_distribution" "this" {
   enabled             = true
   default_root_object = "index.html"
@@ -24,13 +28,7 @@ resource "aws_cloudfront_distribution" "this" {
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
 
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
   }
 
   restrictions {
@@ -43,8 +41,6 @@ resource "aws_cloudfront_distribution" "this" {
     cloudfront_default_certificate = true
   }
 }
-
-
 
 data "aws_iam_policy_document" "this" {
   statement {
@@ -62,4 +58,11 @@ data "aws_iam_policy_document" "this" {
       values   = [aws_cloudfront_distribution.this.arn]
     }
   }
+}
+
+resource "aws_s3_bucket_policy" "this" {
+  bucket = var.bucket_name
+  policy = data.aws_iam_policy_document.this.json
+
+  depends_on = [aws_cloudfront_distribution.this]
 }
