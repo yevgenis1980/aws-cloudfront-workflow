@@ -1,5 +1,4 @@
 
-
 resource "aws_cloudfront_origin_access_control" "this" {
   name                              = "${var.project}-oac"
   origin_access_control_origin_type = "s3"
@@ -28,7 +27,8 @@ resource "aws_cloudfront_distribution" "this" {
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
 
-    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
+    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    #cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
   }
 
   restrictions {
