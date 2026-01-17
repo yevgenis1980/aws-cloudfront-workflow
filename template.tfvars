@@ -1,4 +1,5 @@
 
+
 ###  ---  Default Template  ---  ###
 aws_region   = "us-west-2"
 project_name = "my-static-site"
