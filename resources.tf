@@ -1,6 +1,6 @@
 
 # -----------------------------
-#     Global Modules 
+#          Modules 
 # -----------------------------
 
 module "vpc" {
@@ -9,10 +9,10 @@ cidr_block = "10.0.0.0/16"
 project = var.project_name
 }
 
-
 module "s3" {
   source      = "./modules/s3"
   bucket_name = var.bucket_name
+  depends_on = [module.vpc]
 }
 
 module "cloudfront" {
